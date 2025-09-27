@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تجميعة الشيخ أشرف للأذكار</title>
+    <meta name="description" content="تطبيق شامل للأذكار الإسلامية اليومية مع عدادات تفاعلية وميزات متقدمة">
+    <meta name="theme-color" content="#2c7744">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c7744;
+            --primary-dark: #1e5631;
+            --primary-light: #3a8c55;
+            --secondary-color: #f8f9fa;
+            --accent-color: #d4af37;
+            --text-color: #333;
+            --light-text: #fff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 10px;
+            --transition: all 0.3s ease;
+            --font-size-base: 16px;
+            --font-size-large: 1.2rem;
+            --font-size-small: 0.9rem;
+            --line-height: 1.8;
+        }
+
+        .dark-mode {
+            --primary-color: #3a8c55;
+            --primary-dark: #2c7744;
+            --primary-light: #4ba066;
+            --secondary-color: #2d3748;
+            --accent-color: #ecc94b;
+            --text-color: #e2e8f0;
+            --light-text: #f7fafc;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            font-size: var(--font-size-base);
+            line-height: var(--line-height);
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* تحسين الخط العربي */
+        @font-face {
+            font-family: 'Tajawal';
+            src: url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        }
+
+        body, button, input, textarea {
+            font-family: 'Tajawal', 'Segoe UI', sans-serif;
+        }
+
+        /* الهيدر */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--light-text);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .header-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--light-text);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .control-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* شريط التنقل */
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .nav-btn {
+            background-color: var(--secondary-color);
+            border: 1px solid #ddd;
+            padding: 0.7rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--text-color);
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+        }
+
+        /* المحتوى الرئيسي */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            width: 100%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        /* شريط البحث */
+        .search-container {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: var(--font-size-base);
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(44, 119, 68, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        /* حاوية الأذكار */
+        .azkar-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .zekr-card {
+            background-color: var(--secondary-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .zekr-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .zekr-content {
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .zekr-text {
+            font-size: var(--font-size-large);
+            margin-bottom: 1rem;
+            text-align: center;
+            line-height: var(--line-height);
+            word-spacing: 2px;
+        }
+
+        .zekr-description {
+            font-size: var(--font-size-small);
+            color: #666;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        .zekr-reference {
+            font-style: italic;
+            color: #666;
+            text-align: left;
+            font-size: var(--font-size-small);
+            margin-top: 1rem;
+            border-top: 1px dashed #ddd;
+            padding-top: 0.5rem;
+        }
+
+        .zekr-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            background-color: transparent;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .action-btn:hover {
+            background-color: rgba(44, 119, 68, 0.1);
+            transform: scale(1.1);
+        }
+
+        .action-btn.favorite {
+            color: #ff6b6b;
+        }
+
+        .action-btn.favorite.active {
+            color: #ff6b6b;
+        }
+
+        .counter-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: auto;
+            background-color: rgba(44, 119, 68, 0.05);
+            border-radius: var(--border-radius);
+            padding: 0.5rem;
+        }
+
+        .counter-btn {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .counter-btn:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .counter-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .counter-display {
+            margin: 0 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .completed {
+            color: var(--accent-color);
+            text-align: center;
+            font-weight: bold;
+            margin-top: 1rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* لوحة التقدم */
+        .progress-section {
+            background-color: var(--secondary-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* لوحة الإعدادات */
+        .settings-panel {
+            background-color: var(--secondary-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .settings-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .setting-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .setting-option label {
+            cursor: pointer;
+        }
+
+        /* الفوتر */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--light-text);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        /* أنماط الاستجابة */
+        @media (max-width: 768px) {
+            .azkar-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .header-controls {
+                flex-direction: column;
+            }
+            
+            .zekr-actions {
+                justify-content: center;
+            }
+        }
+
+        /* الأنيميشن */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        .zekr-card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .bounce {
+            animation: bounce 0.5s ease;
+        }
+
+        /* إخفاء العناصر */
+        .hidden {
+            display: none !important;
+        }
+
+        /* زر الانتقال للأعلى */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-mosque"></i>
+            <h1>تجميعة الشيخ أشرف للأذكار</h1>
+        </div>
+        <p>موقع متكامل لأذكار المسلم اليومية</p>
+        <div class="header-controls">
+            <button class="control-btn" id="themeToggle">
+                <i class="fas fa-moon"></i> وضع الليل
+            </button>
+            <button class="control-btn" id="fontIncrease">
+                <i class="fas fa-text-height"></i> تكبير الخط
+            </button>
+            <button class="control-btn" id="fontDecrease">
+                <i class="fas fa-text-width"></i> تصغير الخط
+            </button>
+            <button class="control-btn" id="resetAll">
+                <i class="fas fa-redo"></i> إعادة تعيين الكل
+            </button>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <button class="nav-btn active" data-category="morning">أذكار الصباح</button>
+            <button class="nav-btn" data-category="evening">أذكار المساء</button>
+            <button class="nav-btn" data-category="sleep">أذكار النوم</button>
+            <button class="nav-btn" data-category="wakeup">أذكار الاستيقاظ</button>
+            <button class="nav-btn" data-category="prayer">أذكار بعد الصلاة</button>
+            <button class="nav-btn" data-category="mosque">أذكار المسجد</button>
+            <button class="nav-btn" data-category="food">أذكار الطعام</button>
+            <button class="nav-btn" data-category="travel">أذكار السفر</button>
+            <button class="nav-btn" data-category="protection">أذكار الحماية</button>
+            <button class="nav-btn" data-category="general">أذكار متنوعة</button>
+            <button class="nav-btn" data-category="favorites">المفضلة <i class="fas fa-heart"></i></button>
+        </div>
+    </nav>
+    
+    <main>
+        <section class="progress-section">
+            <h2>تقدمك اليومي</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p id="progressText">لم تقم بأي ذكر بعد</p>
+        </section>
+        
+        <section class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" id="searchInput" placeholder="ابحث في الأذكار...">
+        </section>
+        
+        <section class="settings-panel">
+            <h2>الإعدادات</h2>
+            <div class="settings-options">
+                <div class="setting-option">
+                    <input type="checkbox" id="soundSetting" checked>
+                    <label for="soundSetting">تشغيل صوت عند الانتهاء من الذكر</label>
+                </div>
+                <div class="setting-option">
+                    <input type="checkbox" id="notificationSetting" checked>
+                    <label for="notificationSetting">إشعارات التذكير</label>
+                </div>
+                <div class="setting-option">
+                    <input type="checkbox" id="autoResetSetting">
+                    <label for="autoResetSetting">إعادة تعيين تلقائية يومياً</label>
+                </div>
+            </div>
+        </section>
+        
+        <h2 class="section-title" id="sectionTitle">أذكار الصباح</h2>
+        
+        <div class="azkar-container" id="azkarContainer">
+            <!-- الأذكار سيتم إضافتها هنا بواسطة JavaScript -->
+        </div>
+    </main>
+    
+    <footer>
+        <p>تجميعة الشيخ أشرف للأذكار &copy; 2023 - جميع الحقوق محفوظة</p>
+        <p>تم إنشاء هذا الموقع لخدمة المسلمين وتذكيرهم بأذكار النبي صلى الله عليه وسلم</p>
+    </footer>
+
+    <div class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <script>
+        // بيانات الأذكار الكاملة
+        const azkarData = {
+            morning: [
+                {
+                    text: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ: اللَّهُ لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ، لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ، لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ، مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ، يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ، وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاءَ، وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ، وَلاَ يَؤُودُهُ حِفْظُهُمَا، وَهُوَ الْعَلِيُّ الْعَظِيمُ.",
+                    description: "آية الكرسي - أعظم آية في القرآن",
+                    count: 1,
+                    reference: "سورة البقرة: 255"
+                },
+                {
+                    text: "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ: قُلْ هُوَ اللَّهُ أَحَدٌ، اللَّهُ الصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ.",
+                    description: "سورة الإخلاص - تعدل ثلث القرآن",
+                    count: 3,
+                    reference: "سورة الإخلاص"
+                },
+                {
+                    text: "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ: قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ، مِن شَرِّ مَا خَلَقَ، وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ، وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.",
+                    description: "سورة الفلق - للاحتماء من الشرور",
+                    count: 3,
+                    reference: "سورة الفلق"
+                },
+                {
+                    text: "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ: قُلْ أَعُوذُ بِرَبِّ النَّاسِ، مَلِكِ النَّاسِ، إِلَهِ النَّاسِ، مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ، الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ، مِنَ الْجِنَّةِ وَ النَّاسِ.",
+                    description: "سورة الناس - للاحتماء من الوسواس",
+                    count: 3,
+                    reference: "سورة الناس"
+                },
+                {
+                    text: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذَا الْيَوْمِ وَخَيْرَ مَا بَعْدَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذَا الْيَوْمِ وَشَرِّ مَا بَعْدَهُ، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ.",
+                    description: "ذكر الصباح الكامل",
+                    count: 1,
+                    reference: "رواه مسلم"
+                },
+                {
+                    text: "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ.",
+                    description: "دعاء الصباح",
+                    count: 1,
+                    reference: "رواه الترمذي"
+                },
+                {
+                    text: "اللَّهُمَّ أَنْتَ رَبِّي لاَ إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ.",
+                    description: "دعاء الاستغفار",
+                    count: 1,
+                    reference: "رواه البخاري"
+                },
+                {
+                    text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ.",
+                    description: "تسبيح عظيم الأجر",
+                    count: 3,
+                    reference: "رواه مسلم"
+                },
+                {
+                    text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلاً مُتَقَبَّلاً.",
+                    description: "دعاء طلب العلم النافع",
+                    count: 3,
+                    reference: "رواه ابن ماجه"
+                },
+                {
+                    text: "سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَلاَ إِلَهَ إِلاَّ اللَّهُ وَاللَّهُ أَكْبَرُ وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ.",
+                    description: "الكلمات الطيبات",
+                    count: 10,
+                    reference: "رواه أبو داود"
+                }
+            ],
+            evening: [
+                {
+                    text: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ: اللَّهُ لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ، لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ، لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ، مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ، يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ، وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاءَ، وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ، وَلاَ يَؤُودُهُ حِفْظُهُمَا، وَهُوَ الْعَلِيُّ الْعَظِيمُ.",
+                    description: "آية الكرسي - أعظم آية في القرآن",
+                    count: 1,
+                    reference: "سورة البقرة: 255"
+                },
+                {
+                    text: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذِهِ اللَّيْلَةِ وَخَيْرَ مَا بَعْدَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذِهِ اللَّيْلَةِ وَشَرِّ مَا بَعْدَهَا، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذابٍ فِي النَّارِ وَعَذابٍ فِي الْقَبْرِ.",
+                    description: "ذكر المساء الكامل",
+                    count: 1,
+                    reference: "رواه مسلم"
+                },
+                {
+                    text: "اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ الْمَصِيرُ.",
+                    description: "دعاء المساء",
+                    count: 1,
+                    reference: "رواه الترمذي"
+                },
+                {
+                    text: "اللَّهُمَّ أَنْتَ رَبِّي لاَ إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ.",
+                    description: "دعاء الاستغفار",
+                    count: 1,
+                    reference: "رواه البخاري"
+                },
+                {
+                    text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ.",
+                    description: "تسبيح عظيم الأجر",
+                    count: 3,
+                    reference: "رواه مسلم"
+                },
+                {
+                    text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ هَذِهِ اللَّيْلَةِ، وَأَعُوذُ بِكَ مِنْ شَرِّ هَذِهِ اللَّيْلَةِ وَشَرِّ مَا بَعْدَهَا.",
+                    description: "دعاء المساء المبارك",
+                    count: 3,
+                    reference: "رواه أبو داود"
+                }
+            ],
+            sleep: [
+                {
+                    text: "بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ، إِنْ أَمْسَكْتَ نَفْسِي فَارْحَمْهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِينَ.",
+                    description: "دعاء النوم",
+                    count: 1,
+                    reference: "رواه البخاري ومسلم"
+                },
+                {
+                    text: "اللَّهُمَّ إِنَّكَ خَلَقْتَ نَفْسِي وَأَنْتَ تَوَفَّاهَا، لَكَ مَمَاتُهَا وَمَحْيَاهَا، إِنْ أَحْيَيْتَهَا فَاحْفَظْهَا، وَإِنْ أَمَتَّهَا فَاغْفِرْ لَهَا، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ.",
+                    description: "دعاء النوم",
+                    count: 1,
+                    reference: "رواه مسلم"
+                },
+                {
+                    text: "اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ.",
+                    description: "دعاء النوم",
+                    count: 3,
+                    reference: "رواه أبو داود والترمذي"
+                },
+                {
+                    text: "سُبْحَانَ اللَّهِ (33 مرة)، الْحَمْدُ لِلَّهِ (33 مرة)، اللَّهُ أَكْبَرُ (34 مرة).",
+                    description: "أذكار النوم",
+                    count: 1,
+                    reference: "رواه البخاري ومسلم"
+                },
+                {
+                    text: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا.",
+                    description: "دعاء قصير عند النوم",
+                    count: 1,
+                    reference: "رواه البخاري"
+                }
+            ],
+            wakeup: [
+                {
+                    text: "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا، وَإِلَيْهِ النُّشُورُ.",
+                    description: "دعاء الاستيقاظ",
+                    count: 1,
+                    reference: "رواه البخاري"
+                },
+                {
+                    text: "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَلاَ إِلَهَ إِلاَّ اللَّهُ، وَاللَّهُ أَكْبَرُ، وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ الْعَلِيِّ الْعَظِيمِ، رَبِّ اغْفِرْ لِي.",
+                    description: "أذكار الاستيقاظ",
+                    count: 1,
+                    reference: "رواه البخاري"
+                }
+            ],
+            prayer: [
+                {
+                    text: "أَسْتَغْفِرُ اللَّهَ (ثلاثاً) اللَّهُمَّ أَنْتَ السَّلاَمُ، وَمِنْكَ السَّلاَمُ، تَبَارَكْتَ يَا ذَا الْجَلاَلِ وَالإِكْرَامِ.",
+                    description: "دعاء بعد السلام من الصلاة",
+                    count: 1,
+                    reference: "رواه مسلم"
+                },
+                {
+                    text: "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. اللَّهُمَّ لاَ مَانِعَ لِمَا أَعْطَيْتَ، وَلاَ مُعْطِيَ لِمَا مَنَعْتَ، وَلاَ يَنْفَعُ ذَا الْجَدِّ مِنْكَ الْجَدُّ.",
+                    description: "ذكر بعد الصلاة",
+                    count: 1,
+                    reference: "رواه البخاري ومسلم"
+                },
+                {
+                    text: "سُبْحَانَ اللَّهِ (33 مرة)، الْحَمْدُ لِلَّهِ (33 مرة)، اللَّهُ أَكْبَرُ (33 مرة).",
+                    description: "تسبيح بعد الصلاة",
+                    count: 1,
+                    reference: "رواه مسلم"
+                },
+                {
+                    text: "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.",
+                    description: "ذكر بعد الصلاة",
+                    count: 10,
+                    reference: "رواه مسلم"
+                }
+            ],
+            mosque: [
+                {
+                    text: "اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ.",
+                    description: "دعاء دخول المسجد",
+                    count: 1,
+                    reference: "رواه مسلم"
+                },
+                {
+                    text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ.",
+                    description: "دعاء الخروج من المسجد",
+                    count: 1,
+                    reference: "رواه مسلم"
+                }
+            ],
+            food: [
+                {
+                    text: "بِسْمِ اللَّهِ.",
+                    description: "دعاء قبل الطعام",
+                    count: 1,
+                    reference: "رواه الترمذي"
+                },
+                {
+                    text: "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلاَ قُوَّةٍ.",
+                    description: "دعاء بعد الطعام",
+                    count: 1,
+                    reference: "رواه أبو داود"
+                }
+            ],
+            travel: [
+                {
+                    text: "سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ.",
+                    description: "دعاء ركوب المركوب",
+                    count: 1,
+                    reference: "رواه مسلم"
+                },
+                {
+                    text: "اللَّهُمَّ إِنَّا نَسْأَلُكَ فِي سَفَرِنَا هَذَا الْبِرَّ وَالتَّقْوَى، وَمِنَ الْعَمَلِ مَا تَرْضَى.",
+                    description: "دعاء السفر",
+                    count: 1,
+                    reference: "رواه مسلم"
+                }
+            ],
+            protection: [
+                {
+                    text: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ.",
+                    description: "دعاء الحماية من الشرور",
+                    count: 3,
+                    reference: "رواه مسلم"
+                },
+                {
+                    text: "بِسْمِ اللَّهِ الَّذِي لاَ يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الأَرْضِ وَلاَ فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ.",
+                    description: "دعاء الحماية",
+                    count: 3,
+                    reference: "رواه أبو داود"
+                }
+            ],
+            general: [
+                {
+                    text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.",
+                    description: "كلمة خفيفة على اللسان ثقيلة في الميزان",
+                    count: 100,
+                    reference: "رواه البخاري ومسلم"
+                },
+                {
+                    text: "لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ.",
+                    description: "كنز من كنوز الجنة",
+                    count: 100,
+                    reference: "رواه البخاري ومسلم"
+                },
+                {
+                    text: "سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَلاَ إِلَهَ إِلاَّ اللَّهُ وَاللَّهُ أَكْبَرُ.",
+                    description: "أحب الكلام إلى الله",
+                    count: 10,
+                    reference: "رواه مسلم"
+                },
+                {
+                    text: "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ.",
+                    description: "الصلاة على النبي",
+                    count: 10,
+                    reference: "رواه البخاري"
+                },
+                {
+                    text: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ.",
+                    description: "استغفار جامع",
+                    count: 100,
+                    reference: "رواه الترمذي"
+                }
+            ]
+        };
+
+        // عناصر DOM
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const azkarContainer = document.getElementById('azkarContainer');
+        const sectionTitle = document.getElementById('sectionTitle');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const searchInput = document.getElementById('searchInput');
+        const themeToggle = document.getElementById('themeToggle');
+        const fontIncrease = document.getElementById('fontIncrease');
+        const fontDecrease = document.getElementById('fontDecrease');
+        const resetAll = document.getElementById('resetAll');
+        const scrollToTop = document.getElementById('scrollToTop');
+
+        // إعدادات التطبيق
+        let currentCategory = 'morning';
+        let userProgress = {};
+        let userFavorites = [];
+        let fontSize = 1; // عامل تكبير الخط
+
+        // تهيئة التطبيق
+        function initApp() {
+            // تحميل التقدم المحفوظ
+            loadProgress();
+            
+            // تحميل المفضلات
+            loadFavorites();
+            
+            // عرض أذكار الصباح أولاً
+            displayAzkar(currentCategory);
+            
+            // إضافة أحداث لأزرار التنقل
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // إزالة الفعال من جميع الأزرار
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    // إضافة الفعال للزر المضغوط
+                    button.classList.add('active');
+                    // تغيير الفئة الحالية
+                    currentCategory = button.dataset.category;
+                    // تحديث العنوان
+                    updateSectionTitle();
+                    // عرض الأذكار الجديدة
+                    displayAzkar(currentCategory);
+                });
+            });
+            
+            // إضافة حدث البحث
+            searchInput.addEventListener('input', handleSearch);
+            
+            // إضافة أحداث التحكم
+            themeToggle.addEventListener('click', toggleTheme);
+            fontIncrease.addEventListener('click', increaseFont);
+            fontDecrease.addEventListener('click', decreaseFont);
+            resetAll.addEventListener('click', resetAllProgress);
+            
+            // إضافة حدث للتمرير
+            window.addEventListener('scroll', handleScroll);
+            scrollToTop.addEventListener('click', scrollToTopHandler);
+            
+            // تحديث شريط التقدم
+            updateProgressBar();
+            
+            // تهيئة وضع الليل إذا كان مفعلًا
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> وضع النهار';
+            }
+            
+            // تهيئة حجم الخط
+            const savedFontSize = localStorage.getItem('fontSize');
+            if (savedFontSize) {
+                fontSize = parseFloat(savedFontSize);
+                updateFontSize();
+            }
+        }
+
+        // تحديث عنوان القسم
+        function updateSectionTitle() {
+            const titles = {
+                morning: 'أذكار الصباح',
+                evening: 'أذكار المساء',
+                sleep: 'أذكار النوم',
+                wakeup: 'أذكار الاستيقاظ',
+                prayer: 'أذكار بعد الصلاة',
+                mosque: 'أذكار المسجد',
+                food: 'أذكار الطعام',
+                travel: 'أذكار السفر',
+                protection: 'أذكار الحماية',
+                general: 'أذكار متنوعة',
+                favorites: 'الأذكار المفضلة'
+            };
+            
+            sectionTitle.textContent = titles[currentCategory];
+        }
+
+        // عرض الأذكار
+        function displayAzkar(category, searchTerm = '') {
+            // مسح المحتوى الحالي
+            azkarContainer.innerHTML = '';
+            
+            // الحصول على الأذكار للفئة المحددة
+            let azkar = [];
+            
+            if (category === 'favorites') {
+                // عرض الأذكار المفضلة فقط
+                azkar = getAllAzkar().filter(azkr => userFavorites.includes(azkr.id));
+            } else {
+                azkar = azkarData[category] || [];
+            }
+            
+            // فلترة النتائج إذا كان هناك بحث
+            if (searchTerm) {
+                azkar = azkar.filter(azkr => 
+                    azkr.text.includes(searchTerm) || 
+                    azkr.description.includes(searchTerm) ||
+                    azkr.reference.includes(searchTerm)
+                );
+            }
+            
+            // إذا لم توجد نتائج
+            if (azkar.length === 0) {
+                azkarContainer.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                        <i class="fas fa-search" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                        <p>لا توجد أذكار تطابق بحثك</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // إنشاء بطاقات للأذكار
+            azkar.forEach((zekr, index) => {
+                const zekrId = category === 'favorites' ? zekr.id : `${category}-${index}`;
+                const currentCount = userProgress[zekrId] !== undefined ? userProgress[zekrId] : zekr.count;
+                const isFavorite = userFavorites.includes(zekrId);
+                
+                const zekrCard = document.createElement('div');
+                zekrCard.className = 'zekr-card';
+                zekrCard.style.animationDelay = `${index * 0.1}s`;
+                
+                zekrCard.innerHTML = `
+                    <div class="zekr-content">
+                        <p class="zekr-text">${zekr.text}</p>
+                        ${zekr.description ? `<p class="zekr-description">${zekr.description}</p>` : ''}
+                        <p class="zekr-reference">${zekr.reference}</p>
+                    </div>
+                    <div class="zekr-actions">
+                        <button class="action-btn favorite ${isFavorite ? 'active' : ''}" data-id="${zekrId}">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        <button class="action-btn" onclick="speakText('${zekr.text.replace(/'/g, "\\'")}')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        <button class="action-btn" onclick="copyToClipboard('${zekr.text.replace(/'/g, "\\'")}')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="counter-container">
+                        <button class="counter-btn" data-id="${zekrId}" data-total="${zekr.count}" ${currentCount === 0 ? 'disabled' : ''}>
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <div class="counter-display" id="counter-${zekrId}">${currentCount}</div>
+                        <button class="counter-btn reset-btn" data-id="${zekrId}" data-total="${zekr.count}">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                    </div>
+                    <p class="completed" id="completed-${zekrId}">✓ تم إكمال الذكر</p>
+                `;
+                
+                azkarContainer.appendChild(zekrCard);
+                
+                // التحقق مما إذا كان الذكر مكتملاً
+                if (currentCount === 0) {
+                    document.getElementById(`completed-${zekrId}`).style.display = 'block';
+                }
+                
+                // إضافة أحداث للأزرار
+                const counterBtn = zekrCard.querySelector('.counter-btn:not(.reset-btn)');
+                const resetBtn = zekrCard.querySelector('.reset-btn');
+                const favoriteBtn = zekrCard.querySelector('.favorite');
+                
+                counterBtn.addEventListener('click', () => {
+                    decreaseCounter(zekrId, zekr.count);
+                });
+                
+                resetBtn.addEventListener('click', () => {
+                    resetCounter(zekrId, zekr.count);
+                });
+                
+                favoriteBtn.addEventListener('click', () => {
+                    toggleFavorite(zekrId, favoriteBtn);
+                });
+            });
+        }
+
+        // تقليل العداد
+        function decreaseCounter(zekrId, totalCount) {
+            const currentCount = userProgress[zekrId] !== undefined ? userProgress[zekrId] : totalCount;
+            
+            if (currentCount > 0) {
+                userProgress[zekrId] = currentCount - 1;
+                updateCounterDisplay(zekrId);
+                saveProgress();
+                updateProgressBar();
+                
+                // تحديث حالة الزر
+                if (userProgress[zekrId] === 0) {
+                    document.querySelector(`.counter-btn[data-id="${zekrId}"]`).disabled = true;
+                    document.getElementById(`completed-${zekrId}`).style.display = 'block';
+                    document.getElementById(`counter-${zekrId}`).classList.add('bounce');
+                    
+                    // تشغيل صوت النقر إذا كان مفعلًا
+                    if (document.getElementById('soundSetting').checked) {
+                        playClickSound();
+                    }
+                    
+                    // إزالة تأثير الارتداد بعد انتهاء التحميل
+                    setTimeout(() => {
+                        document.getElementById(`counter-${zekrId}`).classList.remove('bounce');
+                    }, 500);
+                }
+            }
+        }
+
+        // إعادة تعيين العداد
+        function resetCounter(zekrId, totalCount) {
+            userProgress[zekrId] = totalCount;
+            updateCounterDisplay(zekrId);
+            saveProgress();
+            updateProgressBar();
+            document.getElementById(`completed-${zekrId}`).style.display = 'none';
+            document.querySelector(`.counter-btn[data-id="${zekrId}"]`).disabled = false;
+        }
+
+        // تحديث عرض العداد
+        function updateCounterDisplay(zekrId) {
+            const counterElement = document.getElementById(`counter-${zekrId}`);
+            if (counterElement) {
+                counterElement.textContent = userProgress[zekrId];
+            }
+        }
+
+        // تبديل المفضلة
+        function toggleFavorite(zekrId, button) {
+            if (userFavorites.includes(zekrId)) {
+                userFavorites = userFavorites.filter(id => id !== zekrId);
+                button.classList.remove('active');
+            } else {
+                userFavorites.push(zekrId);
+                button.classList.add('active');
+            }
+            saveFavorites();
+            
+            // إذا كنا في قسم المفضلة، قم بتحديث العرض
+            if (currentCategory === 'favorites') {
+                displayAzkar(currentCategory);
+            }
+        }
+
+        // البحث في الأذكار
+        function handleSearch() {
+            const searchTerm = searchInput.value.trim();
+            displayAzkar(currentCategory, searchTerm);
+        }
+
+        // تبديل وضع الليل/النهار
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            
+            if (isDarkMode) {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> وضع النهار';
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i> وضع الليل';
+            }
+            
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        // تكبير الخط
+        function increaseFont() {
+            if (fontSize < 1.5) {
+                fontSize += 0.1;
+                updateFontSize();
+                saveFontSize();
+            }
+        }
+
+        // تصغير الخط
+        function decreaseFont() {
+            if (fontSize > 0.8) {
+                fontSize -= 0.1;
+                updateFontSize();
+                saveFontSize();
+            }
+        }
+
+        // تحديث حجم الخط
+        function updateFontSize() {
+            document.documentElement.style.fontSize = `calc(${fontSize} * 16px)`;
+        }
+
+        // حفظ حجم الخط
+        function saveFontSize() {
+            localStorage.setItem('fontSize', fontSize.toString());
+        }
+
+        // إعادة تعيين كل التقدم
+        function resetAllProgress() {
+            if (confirm('هل أنت متأكد من إعادة تعيين كل التقدم؟')) {
+                userProgress = {};
+                saveProgress();
+                displayAzkar(currentCategory);
+                updateProgressBar();
+            }
+        }
+
+        // التعامل مع التمرير
+        function handleScroll() {
+            if (window.pageYOffset > 300) {
+                scrollToTop.classList.add('visible');
+            } else {
+                scrollToTop.classList.remove('visible');
+            }
+        }
+
+        // الانتقال للأعلى
+        function scrollToTopHandler() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // تشغيل صوت النقر
+        function playClickSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+
+        // Text-to-Speech
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ar-SA';
+                utterance.rate = 0.8;
+                speechSynthesis.speak(utterance);
+            } else {
+                alert('عذراً، هذه الميزة غير مدعومة في متصفحك');
+            }
+        }
+
+        // نسخ النص للحافظة
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // إشعار بنسخ النص
+                const notification = document.createElement('div');
+                notification.textContent = 'تم نسخ النص إلى الحافظة';
+                notification.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    right: 50%;
+                    transform: translateX(50%);
+                    background: var(--primary-color);
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    z-index: 1000;
+                    transition: opacity 0.3s;
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 2000);
+            }).catch(err => {
+                console.error('فشل في نسخ النص: ', err);
+            });
+        }
+
+        // الحصول على جميع الأذكار
+        function getAllAzkar() {
+            const allAzkar = [];
+            for (const category in azkarData) {
+                azkarData[category].forEach((azkr, index) => {
+                    allAzkar.push({
+                        ...azkr,
+                        id: `${category}-${index}`,
+                        category: category
+                    });
+                });
+            }
+            return allAzkar;
+        }
+
+        // تحديث شريط التقدم
+        function updateProgressBar() {
+            let totalAzkar = 0;
+            let completedAzkar = 0;
+            
+            // حساب إجمالي الأذكار والمكتملة
+            for (const category in azkarData) {
+                azkarData[category].forEach((zekr, index) => {
+                    const zekrId = `${category}-${index}`;
+                    totalAzkar += zekr.count;
+                    
+                    const currentCount = userProgress[zekrId] !== undefined ? userProgress[zekrId] : zekr.count;
+                    completedAzkar += (zekr.count - currentCount);
+                });
+            }
+            
+            // حساب النسبة المئوية
+            const percentage = totalAzkar > 0 ? Math.round((completedAzkar / totalAzkar) * 100) : 0;
+            
+            // تحديث شريط التقدم
+            progressFill.style.width = `${percentage}%`;
+            
+            // تحديث النص
+            if (completedAzkar === 0) {
+                progressText.textContent = 'لم تقم بأي ذكر بعد';
+            } else if (completedAzkar === totalAzkar) {
+                progressText.textContent = 'تهانينا! لقد أكملت جميع الأذكار لهذا اليوم';
+            } else {
+                progressText.textContent = `أكملت ${completedAzkar} من أصل ${totalAzkar} ذكرًا (${percentage}%)`;
+            }
+        }
+
+        // حفظ التقدم في localStorage
+        function saveProgress() {
+            // إضافة تاريخ اليوم للتقدم
+            const today = new Date().toDateString();
+            const progressData = {
+                date: today,
+                progress: userProgress
+            };
+            
+            localStorage.setItem('azkarProgress', JSON.stringify(progressData));
+        }
+
+        // تحميل التقدم من localStorage
+        function loadProgress() {
+            const savedProgress = localStorage.getItem('azkarProgress');
+            
+            if (savedProgress) {
+                const progressData = JSON.parse(savedProgress);
+                const today = new Date().toDateString();
+                
+                // إذا كان التقدم محفوظًا ليوم آخر، نبدأ من جديد
+                if (progressData.date === today) {
+                    userProgress = progressData.progress;
+                } else {
+                    userProgress = {};
+                    saveProgress(); // حفظ تقدم جديد لليوم الحالي
+                }
+            } else {
+                userProgress = {};
+            }
+        }
+
+        // حفظ المفضلة
+        function saveFavorites() {
+            localStorage.setItem('azkarFavorites', JSON.stringify(userFavorites));
+        }
+
+        // تحميل المفضلة
+        function loadFavorites() {
+            const savedFavorites = localStorage.getItem('azkarFavorites');
+            userFavorites = savedFavorites ? JSON.parse(savedFavorites) : [];
+        }
+
+        // تهيئة التطبيق عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
